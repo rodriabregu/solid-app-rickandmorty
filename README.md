@@ -1,3 +1,7 @@
+# Base
+
+Base made with Solid.JS and with VITE packer.
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.js.org/) via `pnpm up -Lri`.
