@@ -7,7 +7,7 @@ return fetch('https://rickandmortyapi.com/api/character')
     .then(res => res.json())
     .then(resp => {
         console.log(resp.results)
-        return resp.results
+        return resp.results.slice(0, 5)
     })
 }   
 
@@ -39,8 +39,7 @@ const App = () => {
         <For each={getData()} /* fallback={<div>Loading...</div>} */>
             {e => (
                 <div>
-                <span>{e.name}{<br/>}</span>
-                <span>{e.status}{<br/>}</span>
+                <span>{e.name}, status: {e.status}{<br/>}</span>
                 <img src={e.image} />
                 {<hr/>}
             </div>                
