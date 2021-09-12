@@ -16,17 +16,23 @@ const App = () => {
 
     const [getData, { mutate, refetch }] = createResource(fetchData, { initialValue: [] })
 
+    const handleFav = e => {
+        const favs = [];
+        favs.push({...favs, e})
+        localStorage.setItem("favorites", JSON.stringify(favs));
+    }
+
     return (
         <>
         <h1>New app, with Solid.JS and Rick and Morty  API REST  :D</h1>
         <Switch fallback={<div>Loading...</div>}>
-        <Match when={getData.error}>
+            <Match when={getData.error}>
             <div>Error.</div>
-        </Match>
+            </Match>
 
-        <Match when={getData.loading}>
+            <Match when={getData.loading}>
             <div>Loading...</div>
-        </Match>
+            </Match>
 
 {/*         <Show when={getData.loading}>
             <div>Loading...</div>
@@ -36,17 +42,18 @@ const App = () => {
             <div>Error.</div>
         </Show> */}
         <Match when={getData}>
-        <For each={getData()} /* fallback={<div>Loading...</div>} */>
-            {e => (
-                <div>
-                <span>{e.name}, status: {e.status}{<br/>}</span>
-                <img src={e.image} />
-                {<hr/>}
-            </div>                
-            )}
-        </For>
+            <For each={getData()} /* fallback={<div>Loading...</div>} */>
+                {e => (
+                    <div>
+                    <span>{e.name}, status: {e.status}{<br/>}</span>
+                    <img src={e.image} />
+                    <button onClick={() => handleFav(e.id)}>Fav</button>
+                    {<hr/>}
+                </div>                
+                )}
+            </For>
         </Match>
-            </Switch>
+        </Switch>
 {/*         {
             getData().map(e => {
                 return (
