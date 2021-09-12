@@ -13,13 +13,13 @@ return fetch('https://rickandmortyapi.com/api/character')
 
 const App = () => {
     const [getResults, setResults] = createSignal([])
+    const [getFav, setFavs] = createSignal([])
 
     const [getData, { mutate, refetch }] = createResource(fetchData, { initialValue: [] })
 
     const handleFav = e => {
-        const favs = [];
-        favs.push({...favs, e})
-        localStorage.setItem("favorites", JSON.stringify(favs));
+        setFavs(...getFav() + e)
+        localStorage.setItem("favorites", JSON.stringify(getFav()));
     }
 
     return (
@@ -27,11 +27,11 @@ const App = () => {
         <h1>New app, with Solid.JS and Rick and Morty  API REST  :D</h1>
         <Switch fallback={<div>Loading...</div>}>
             <Match when={getData.error}>
-            <div>Error.</div>
+                <div>Error.</div>
             </Match>
 
             <Match when={getData.loading}>
-            <div>Loading...</div>
+                <div>Loading...</div>
             </Match>
 
 {/*         <Show when={getData.loading}>
